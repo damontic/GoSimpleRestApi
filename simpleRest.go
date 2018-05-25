@@ -2,31 +2,31 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"html"
 	"log"
+	"net/http"
 )
 
 const (
 	version = "v1.0.0"
 )
 
-func rootHandler(w http.ResponseWriter, r *http.Request){
+func rootHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
 }
 
-func healthHandler(w http.ResponseWriter, r *http.Request){
+func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 }
 
-func versionHandler(w http.ResponseWriter, r *http.Request){
+func versionHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Version: %s", version)
 }
 
-func main(){
+func main() {
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/version", versionHandler)
 
-	log.Fatal(http.ListenAndServe(":8080",nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
