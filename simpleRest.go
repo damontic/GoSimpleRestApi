@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"html"
 	"log"
 	"net/http"
+	"flag"
+	"strings"
 )
 
 const (
@@ -12,7 +13,7 @@ const (
 )
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+	fmt.Fprintf(w, "Hello, %s", strings.Replace(r.URL.Path, "/", "", -1))
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,9 +25,14 @@ func versionHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	port := flag.String("port", "8080", "The port in which the microservice is running.")
+	flag.Parse()
+
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/version", versionHandler)
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Running on port %s", *port)
+	log.Fatal(http.ListenAndServe(":" + *port, nil))
 }
