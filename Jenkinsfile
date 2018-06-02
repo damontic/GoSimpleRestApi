@@ -5,19 +5,19 @@ pipeline {
         stage('Get') {
             steps {
                 echo 'Getting..'
-                sh go get -u github.com/damontic/GoSimpleRestApi
+                sh "go get -u github.com/damontic/GoSimpleRestApi"
             }
         }
         stage('Check Style') {
             steps {
                 echo 'Checking Style ...'
-                sh golint github.com/damontic/GoSimpleRestApid
+                sh "golint github.com/damontic/GoSimpleRestApid"
             }
         }
         stage('Check Suspicious Code') {
             steps {
                 echo 'Checking Suspicious Code..'
-                sh go vet github.com/damontic/GoSimpleRestApid
+                sh "go vet github.com/damontic/GoSimpleRestApid"
             }
         }
         stage('Deploy') {
