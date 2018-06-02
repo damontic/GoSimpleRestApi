@@ -13,3 +13,18 @@ go run simpleRest.go
 ```shell
 go fmt simpleRest.go
 ```
+
+## To check style
+
+```shell
+golint
+```
+
+## To check suspicious constructs
+
+```shell
+go vet
+```
+
+## This app can be monitored using Prometheus
+
