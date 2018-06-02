@@ -23,9 +23,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                ansiblePlaybook {
-                    playbook install_go_simple_rest_api.yml
-                    inventory inventory_file
+                ansiblePlaybook(playbook: "install_go_simple_rest_api.yml") {
+                    inventory("inventory_file")
                 }
             }
         }
