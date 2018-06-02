@@ -1,11 +1,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
-	"flag"
 	"strings"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 const (
@@ -14,10 +16,6 @@ const (
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, %s", strings.Replace(r.URL.Path, "/", "", -1))
-}
-
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
 }
 
 func versionHandler(w http.ResponseWriter, r *http.Request) {
@@ -30,9 +28,9 @@ func main() {
 	flag.Parse()
 
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/version", versionHandler)
+	http.Handle("/metrics", prometheus.Handler())
 
-	log.Println("Running on port %s", *port)
-	log.Fatal(http.ListenAndServe(":" + *port, nil))
+	log.Printf("Running on port %s\n", *port)
+	log.Fatal(http.ListenAndServe(":"+*port, nil))
 }
