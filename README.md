@@ -7,3 +7,9 @@ Used for trainings in CI/CD and DevOps.
 ```shell
 go run simpleRest.go
 ```
+
+## To format the code
+
+```shell
+go fmt simpleRest.go
+```
