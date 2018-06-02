@@ -1,3 +1,3 @@
 # Go Simple Rest API
 
-User for tranings in CI/CD and DevOps
+Used for trainings in CI/CD and DevOps.
