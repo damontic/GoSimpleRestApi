@@ -2,28 +2,28 @@
 
 Used for trainings in CI/CD and DevOps.
 
-## To run the application
-
-```shell
-go run simpleRest.go
-```
-
 ## To format the code
 
 ```shell
-go fmt simpleRest.go
+go fmt github.com/damontic/GoSimpleRestApi
 ```
 
 ## To check style
 
 ```shell
-golint
+golint github.com/damontic/GoSimpleRestApi
 ```
 
 ## To check suspicious constructs
 
 ```shell
-go vet
+go vet github.com/damontic/GoSimpleRestApi
+```
+
+## To run some tests
+
+```shell
+go test -v github.com/damontic/GoSimpleRestApi
 ```
 
 ## To install
