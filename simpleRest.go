@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -22,6 +23,11 @@ func versionHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Version: %s", version)
 }
 
+func hostnameHandler(w http.ResponseWriter, r *http.Request) {
+	hostname, _ := os.Hostname()
+	fmt.Fprintf(w, "Hostname: %s", hostname)
+}
+
 func main() {
 
 	port := flag.String("port", "8080", "The port in which the microservice is running.")
@@ -29,6 +35,7 @@ func main() {
 
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/version", versionHandler)
+	http.HandleFunc("/hostname", hostnameHandler)
 	http.Handle("/metrics", prometheus.Handler())
 
 	log.Printf("Running on port %s\n", *port)
