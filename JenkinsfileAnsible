@@ -1,0 +1,33 @@
+pipeline {
+    
+    agent {
+        docker {
+            image 'appleboy/golang-testing'
+            args '-u root'
+        }
+    }
+    
+    stages {
+        stage("Checkout Code") {
+            steps {
+                git 'git@github.marchex.com:dmontano/s4n-spinnaker-poc-gotest.git'
+            }
+        }
+        stage("Checkout Dependencies") {
+            steps {
+                sh 'go get -u github.com/prometheus/client_golang/prometheus'
+                sh 'go get -u github.com/beorn7/perks/quantile'
+                sh 'go get -u github.com/golang/protobuf/proto'
+                sh 'go get -u github.com/prometheus/client_model/go'
+                sh 'go get -u github.com/prometheus/common/expfmt'
+                sh 'go get -u github.com/prometheus/common/model'
+                sh 'go get -u github.com/prometheus/procfs'
+            }
+        }
+        stage("Test") {
+            steps {
+                sh 'go test'   
+            }
+        }
+    }
+}
